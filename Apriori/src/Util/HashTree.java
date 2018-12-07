@@ -53,15 +53,21 @@ public class HashTree<E extends Object&Comparable>{
     @SuppressWarnings("unchecked")
     public void putTransaction(Set<E> transaction){
 
-        ArrayList<E> transactionList=new ArrayList<>(transaction);
+        //用TreeSet将transaction排序
+        TreeSet<E> orderedTransaction=new TreeSet<>(transaction);
+        ArrayList<E> transactionList=new ArrayList<>(orderedTransaction);
+
         //已考虑的元素集合，初始为空
         List<E> preSubList=new ArrayList<>();
         //未考虑的元素集合，浅拷贝事务集，初始为整个事务集
         List<E> postSubList=(ArrayList<E>)transactionList.clone();
 
+        orderedTransaction=null;
+        transactionList=null;
+
         seekByK(postSubList,preSubList,1,root);
 
-        transactionList=null;
+
         preSubList=null;
         postSubList=null;
     }
